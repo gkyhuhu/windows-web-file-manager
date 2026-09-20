@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Windows 本地网页文件管理器</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">📁</span>
+      <div>
+        <h1>本地文件管理器</h1>
+        <p id="rootLabel" class="muted">加载中…</p>
+      </div>
+    </div>
+    <div class="search-box">
+      <input id="searchInput" type="search" placeholder="在当前根目录下按名称搜索…" />
+      <button id="searchBtn" type="button">搜索</button>
+      <button id="clearSearchBtn" type="button" class="ghost" hidden>清除</button>
+    </div>
+  </header>
+
+  <nav id="breadcrumb" class="breadcrumb" aria-label="breadcrumb"></nav>
+
+  <section class="toolbar">
+    <div class="left">
+      <button id="refreshBtn" type="button">刷新</button>
+      <button id="mkdirBtn" type="button">新建文件夹</button>
+      <label class="upload-btn">
+        上传
+        <input id="uploadInput" type="file" multiple hidden />
+      </label>
+    </div>
+    <div class="right">
+      <span id="clipStatus" class="clip muted"></span>
+      <button id="pasteBtn" type="button" disabled>粘贴</button>
+    </div>
+  </section>
+
+  <main>
+    <table class="file-table" aria-label="file list">
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>大小</th>
+          <th>修改时间</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="fileBody"></tbody>
+    </table>
+    <p id="emptyHint" class="empty" hidden>此目录为空</p>
+  </main>
+
+  <!-- Rename modal -->
+  <dialog id="renameDialog">
+    <form method="dialog" id="renameForm">
+      <h3>重命名</h3>
+      <input id="renameInput" type="text" required />
+      <div class="dialog-actions">
+        <button type="submit" value="ok">确定</button>
+        <button type="button" id="renameCancel" class="ghost">取消</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Mkdir modal -->
+  <dialog id="mkdirDialog">
+    <form method="dialog" id="mkdirForm">
+      <h3>新建文件夹</h3>
+      <input id="mkdirInput" type="text" required placeholder="文件夹名称" />
+      <div class="dialog-actions">
+        <button type="submit" value="ok">创建</button>
+        <button type="button" id="mkdirCancel" class="ghost">取消</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Editor modal -->
+  <dialog id="editorDialog" class="editor-dialog">
+    <div class="editor-header">
+      <h3 id="editorTitle">编辑</h3>
+      <div>
+        <button id="editorSave" type="button">保存</button>
+        <button id="editorClose" type="button" class="ghost">关闭</button>
+      </div>
+    </div>
+    <textarea id="editorArea" spellcheck="false"></textarea>
+    <p id="editorMeta" class="muted"></p>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
